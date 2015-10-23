@@ -1,0 +1,19 @@
+{
+  "name": "rollup-plugin-replace",
+  "version": "0.1.0",
+  "devDependencies": {
+    "eslint": "^1.7.3",
+    "mocha": "^2.3.3"
+  },
+  "dependencies": {
+    "magic-string": "^0.8.0",
+    "minimatch": "^3.0.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ]
+}
