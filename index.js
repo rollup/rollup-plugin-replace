@@ -1,27 +1,5 @@
 var MagicString = require( 'magic-string' );
-var minimatch = require( 'minimatch' );
-
-function ensureArray ( thing ) {
-	return thing ?
-		( Object.prototype.toString.call( thing ) === '[object Array]' ? thing : [ thing ] ) :
-		[];
-}
-
-function createFilter ( include, exclude ) {
-	return function ( id ) {
-		var included = !include.length;
-
-		include.forEach( function ( pattern ) {
-			if ( pattern.test( id ) ) included = true;
-		});
-
-		exclude.forEach( function ( pattern ) {
-			if ( pattern.test( id ) ) included = false;
-		});
-
-		return included;
-	};
-}
+var createFilter = require( 'rollup-pluginutils' ).createFilter;
 
 function escape ( str ) {
 	return str.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&' );
@@ -34,11 +12,7 @@ module.exports = function replace ( options ) {
 	var delimiters = ( options.delimiters || [ '', '' ] ).map( escape );
 	var pattern = new RegExp( delimiters[0] + '(' + Object.keys( replacers ).join( '|' ) + ')' + delimiters[1], 'g' );
 
-	var include = ensureArray( options.include ).map( minimatch.makeRe );
-	var exclude = ensureArray( options.exclude ).map( minimatch.makeRe );
-	var filter = createFilter( include, exclude );
-
-
+	var filter = createFilter( options.include, options.exclude );
 
 	return {
 		transform: function ( code, id ) {
