@@ -1,7 +1,5 @@
 # rollup-plugin-replace
 
-**Experimental - depends on unreleased version of Rollup**
-
 Replace strings in files while bundling them.
 
 
