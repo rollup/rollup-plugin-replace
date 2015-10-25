@@ -1,17 +1,27 @@
 {
   "name": "rollup-plugin-replace",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "devDependencies": {
     "eslint": "^1.7.3",
-    "mocha": "^2.3.3"
+    "gobble": "^0.10.2",
+    "gobble-cli": "^0.6.0",
+    "gobble-rollup": "^0.11.0",
+    "mocha": "^2.3.3",
+    "rollup": "^0.20.0",
+    "rollup-plugin-babel": "^1.0.0"
   },
+  "main": "dist/rollup-plugin-replace.cjs.js",
+  "jsnext:main": "dist/rollup-plugin-replace.es6.js",
   "dependencies": {
     "magic-string": "^0.8.0",
     "minimatch": "^3.0.0",
     "rollup-pluginutils": "^1.1.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "pretest": "npm run build",
+    "build": "gobble build -f dist",
+    "prepublish": "npm test"
   },
   "files": [
     "index.js",
