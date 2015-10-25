@@ -52,8 +52,8 @@ rollup({
   ENVIRONMENT: JSON.stringify( 'development' ),
 
   // ...unless you want to be careful about separating
-  // replacers from other options, in which case you can:
-  replacers: {
+  // values from other options, in which case you can:
+  values: {
     VERSION: '1.0.0',
     ENVIRONMENT: JSON.stringify( 'development' )
   }

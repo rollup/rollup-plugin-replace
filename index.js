@@ -8,9 +8,9 @@ function escape ( str ) {
 module.exports = function replace ( options ) {
 	options = options || {};
 
-	var replacers = options.replace || options;
+	var values = options.values || options;
 	var delimiters = ( options.delimiters || [ '', '' ] ).map( escape );
-	var pattern = new RegExp( delimiters[0] + '(' + Object.keys( replacers ).join( '|' ) + ')' + delimiters[1], 'g' );
+	var pattern = new RegExp( delimiters[0] + '(' + Object.keys( values ).join( '|' ) + ')' + delimiters[1], 'g' );
 
 	var filter = createFilter( options.include, options.exclude );
 
@@ -28,7 +28,7 @@ module.exports = function replace ( options ) {
 
 				var start = match.index;
 				var end = start + match[0].length;
-				var replacement = String( replacers[ match[1] ] );
+				var replacement = String( values[ match[1] ] );
 
 				magicString.overwrite( start, end, replacement );
 			}
