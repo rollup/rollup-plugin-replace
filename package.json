@@ -8,7 +8,7 @@
   "dependencies": {
     "magic-string": "^0.8.0",
     "minimatch": "^3.0.0",
-    "rollup-pluginutils": "^1.0.0"
+    "rollup-pluginutils": "^1.1.0"
   },
   "scripts": {
     "test": "mocha"
