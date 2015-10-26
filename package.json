@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-replace",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "devDependencies": {
     "eslint": "^1.7.3",
     "gobble": "^0.10.2",
@@ -24,7 +24,8 @@
     "prepublish": "npm test"
   },
   "files": [
-    "index.js",
+    "src",
+    "dist",
     "README.md"
   ]
 }
