@@ -5,12 +5,39 @@ function escape ( str ) {
 	return str.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&' );
 }
 
+function assign ( target, source ) {
+	Object.keys( source ).forEach( key => {
+		target[ key ] = source[ key ];
+	});
+	return target;
+}
+
+function functor ( thing ) {
+	if ( typeof thing === 'function' ) return thing;
+	return () => thing;
+}
+
 export default function replace ( options = {} ) {
-	const values = options.values || options;
+	const filter = createFilter( options.include, options.exclude );
 	const delimiters = ( options.delimiters || [ '', '' ] ).map( escape );
+
+	let values;
+
+	if ( options.values ) {
+		values = options.values;
+	} else {
+		values = assign( {}, options );
+		delete values.delimiters;
+		delete values.include;
+		delete values.exclude;
+	}
+
 	const pattern = new RegExp( delimiters[0] + '(' + Object.keys( values ).join( '|' ) + ')' + delimiters[1], 'g' );
 
-	const filter = createFilter( options.include, options.exclude );
+	// convert all values to functions
+	Object.keys( values ).forEach( key => {
+		values[ key ] = functor( values[ key ] );
+	});
 
 	return {
 		transform ( code, id ) {
@@ -27,7 +54,7 @@ export default function replace ( options = {} ) {
 
 				start = match.index;
 				end = start + match[0].length;
-				replacement = String( values[ match[1] ] );
+				replacement = String( values[ match[1] ]( id ) );
 
 				magicString.overwrite( start, end, replacement );
 			}
