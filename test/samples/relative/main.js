@@ -1,5 +1,5 @@
 import foo from './dir/foo.js';
 
-const bar = __filename;
+var bar = __filename;
 
 export { foo, bar };

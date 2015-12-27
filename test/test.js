@@ -1,20 +1,20 @@
-var assert = require( 'assert' );
-var rollup = require( 'rollup' );
-var replace = require( '..' );
-var path = require( 'path' );
+import * as assert from 'assert';
+import * as path from 'path';
+import { rollup } from 'rollup';
+import replace from '..';
 
 process.chdir( __dirname );
 
-describe( 'rollup-plugin-replace', function () {
-	it( 'replaces strings', function () {
-		return rollup.rollup({
+describe( 'rollup-plugin-replace', () => {
+	it( 'replaces strings', () => {
+		return rollup({
 			entry: 'samples/basic/main.js',
 			plugins: [
 				replace({
 					ENV: "'production'"
 				})
 			]
-		}).then( function ( bundle ) {
+		}).then( bundle => {
 			const generated = bundle.generate();
 			const code = generated.code;
 
@@ -22,17 +22,15 @@ describe( 'rollup-plugin-replace', function () {
 		});
 	});
 
-	it( 'allows replacement to be a function', function () {
-		return rollup.rollup({
+	it( 'allows replacement to be a function', () => {
+		return rollup({
 			entry: 'samples/relative/main.js',
 			plugins: [
 				replace({
-					__filename: function ( id ) {
-						return '"' + id.slice( path.resolve( __dirname, 'samples/relative' ).length + 1 ) + '"';
-					}
+					__filename: id => `'${id.slice( path.resolve( __dirname, 'samples/relative' ).length + 1 )}'`
 				})
 			]
-		}).then( function ( bundle ) {
+		}).then( bundle => {
 			const generated = bundle.generate({ format: 'cjs' });
 			const code = generated.code;
 
