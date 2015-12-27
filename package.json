@@ -3,6 +3,7 @@
   "version": "1.2.0",
   "devDependencies": {
     "babel-preset-es2015-rollup": "^1.0.0",
+    "babel-register": "^6.3.13",
     "eslint": "^1.7.3",
     "mocha": "^2.3.3",
     "rollup": "^0.22.0",
@@ -16,7 +17,7 @@
     "rollup-pluginutils": "^1.1.0"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --compilers js:babel-register",
     "pretest": "npm run build",
     "build": "rollup -c -f cjs -o dist/rollup-plugin-replace.cjs.js && rollup -c -f es6 -o dist/rollup-plugin-replace.es6.js",
     "prebuild": "rm -rf dist/*",
