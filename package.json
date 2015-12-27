@@ -2,15 +2,16 @@
   "name": "rollup-plugin-replace",
   "version": "1.1.0",
   "devDependencies": {
+    "babel-preset-es2015-rollup": "^1.0.0",
     "eslint": "^1.7.3",
     "mocha": "^2.3.3",
-    "rollup": "^0.21.0",
-    "rollup-plugin-babel": "^1.0.0"
+    "rollup": "^0.22.0",
+    "rollup-plugin-babel": "^2.2.0"
   },
   "main": "dist/rollup-plugin-replace.cjs.js",
   "jsnext:main": "dist/rollup-plugin-replace.es6.js",
   "dependencies": {
-    "magic-string": "^0.8.0",
+    "magic-string": "^0.10.0",
     "minimatch": "^3.0.0",
     "rollup-pluginutils": "^1.1.0"
   },
@@ -25,5 +26,22 @@
     "src",
     "dist",
     "README.md"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rollup/rollup-plugin-replace.git"
+  },
+  "keywords": [
+    "rollup",
+    "rollup-plugin",
+    "es2015",
+    "npm",
+    "modules"
+  ],
+  "author": "Rich Harris <richard.a.harris@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rollup/rollup-plugin-replace/issues"
+  },
+  "homepage": "https://github.com/rollup/rollup-plugin-replace#readme"
 }
