@@ -58,6 +58,14 @@ rollup({
 }
 ```
 
+A replacement value can be supplied as a function that takes a module ID as its only argument:
+
+```js
+{
+  __dirname: ( id ) => `'${path.dirname( id )}'`
+}
+```
+
 
 ## License
 
