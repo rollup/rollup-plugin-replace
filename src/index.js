@@ -13,6 +13,8 @@ export default function replace ( options = {} ) {
 	const filter = createFilter( options.include, options.exclude );
 
 	return {
+		name: 'replace',
+
 		transform ( code, id ) {
 			if ( !filter( id ) ) return null;
 
