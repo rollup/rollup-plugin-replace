@@ -5,10 +5,15 @@ function escape ( str ) {
 	return str.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&' );
 }
 
+function longest ( a, b ) {
+	return b.length - a.length;
+}
+
 export default function replace ( options = {} ) {
 	const values = options.values || options;
 	const delimiters = ( options.delimiters || [ '', '' ] ).map( escape );
-	const pattern = new RegExp( delimiters[0] + '(' + Object.keys( values ).join( '|' ) + ')' + delimiters[1], 'g' );
+	const keys = Object.keys( values ).sort( longest )
+	const pattern = new RegExp( delimiters[0] + '(' + keys.join( '|' ) + ')' + delimiters[1], 'g' );
 
 	const filter = createFilter( options.include, options.exclude );
 
