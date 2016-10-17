@@ -3,3 +3,6 @@ if ( ENV !== 'production' ) {
 } else {
 	console.log( 'running...' );
 }
+
+console.log( 'channel:', BUILD )
+console.log( '...REBUILDING...' )

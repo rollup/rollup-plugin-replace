@@ -40,8 +40,14 @@ rollup({
   // too permissive
   exclude: 'node_modules/**',
 
+  // By default, occurences are only matched within word
+  // boundaries. Supply empty delimiters to replace every
+  // occurence of `foo` even in the middle of words,
+  // such as `barfoobar`
+  delimiters: [ '', '' ],
+
   // To replace every occurence of `<@foo@>` instead of every
-  // occurence of `foo`, supply delimiters
+  // occurence of `\bfoo\b`, supply delimiters
   delimiters: [ '<@', '@>' ],
 
   // All other options are treated as `string: replacement`
