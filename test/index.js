@@ -21,5 +21,21 @@ describe( 'rollup-plugin-replace', function () {
 		});
 	});
 
+	it( 'supports special characters' , function () {
+		return rollup.rollup({
+			entry: 'samples/basic/main.js',
+			plugins: [
+				replace({
+					"require( 'one' )": "1"
+				})
+			]
+		}).then( function ( bundle ) {
+			const generated = bundle.generate();
+			const code = generated.code;
+
+			assert.ok( code.indexOf( "const one = 1" ) !== -1 );
+		});
+	});
+
 	// TODO tests for delimiters, sourcemaps, etc
 });

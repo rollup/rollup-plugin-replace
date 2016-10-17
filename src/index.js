@@ -8,7 +8,7 @@ function escape ( str ) {
 export default function replace ( options = {} ) {
 	const values = options.values || options;
 	const delimiters = ( options.delimiters || [ '', '' ] ).map( escape );
-	const pattern = new RegExp( delimiters[0] + '(' + Object.keys( values ).join( '|' ) + ')' + delimiters[1], 'g' );
+	const pattern = new RegExp( delimiters[0] + '(' + Object.keys( values ).map( escape ).join( '|' ) + ')' + delimiters[1], 'g' );
 
 	const filter = createFilter( options.include, options.exclude );
 
