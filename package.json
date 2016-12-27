@@ -26,10 +26,7 @@
     "dist",
     "README.md"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rollup/rollup-plugin-replace.git"
-  },
+  "repository": "rollup/rollup-plugin-replace",
   "keywords": [
     "rollup",
     "rollup-plugin",
