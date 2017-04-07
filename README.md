@@ -12,6 +12,9 @@ npm install --save-dev rollup-plugin-replace
 
 ## Usage
 
+Generally, you need to ensure that rollup-plugin-replace goes *before* other things (like rollup-plugin-commonjs) in your `plugins` array, so that those plugins can apply any optimisations such as dead code removal.
+
+
 ```js
 import { rollup } from 'rollup';
 import replace from 'rollup-plugin-replace';
