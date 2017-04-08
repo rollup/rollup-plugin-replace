@@ -5,9 +5,13 @@ function escape ( str ) {
 	return str.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&' );
 }
 
+function boundaries ( str ) {
+	return str.replace( /[\b]/g, '\\b' );
+}
+
 export default function replace ( options = {} ) {
 	const values = options.values || options;
-	const delimiters = ( options.delimiters || [ '', '' ] ).map( escape );
+	const delimiters = ( options.delimiters || [ '\b', '\b' ] ).map( escape ).map( boundaries );
 	const pattern = new RegExp( delimiters[0] + '(' + Object.keys( values ).join( '|' ) + ')' + delimiters[1], 'g' );
 
 	const filter = createFilter( options.include, options.exclude );
