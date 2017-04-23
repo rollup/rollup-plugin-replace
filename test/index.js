@@ -18,6 +18,7 @@ describe( 'rollup-plugin-replace', function () {
 			const code = generated.code;
 
 			assert.ok( code.indexOf( "running in debug mode" ) === -1 );
+			assert.ok( code.indexOf( "running" ) !== -1 );
 		});
 	});
 
