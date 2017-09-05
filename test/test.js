@@ -18,7 +18,7 @@ describe('rollup-plugin-replace', () => {
 
 		const { code } = await bundle.generate({ format: 'es' });
 		console.log(code);
-		assert.equal(code, 'console.log(42);');
+		assert.equal(code.trim(), 'console.log(42);');
 	});
 
 	it('allows replacement to be a function', async () => {
