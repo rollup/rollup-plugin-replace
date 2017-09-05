@@ -16,17 +16,17 @@ Generally, you need to ensure that rollup-plugin-replace goes *before* other thi
 
 
 ```js
-import { rollup } from 'rollup';
+// rollup.config.js
 import replace from 'rollup-plugin-replace';
 
-rollup({
-  entry: 'main.js',
+export default {
+  // ...
   plugins: [
     replace({
       ENVIRONMENT: JSON.stringify( 'production' )
     })
   ]
-}).then(...)
+};
 ```
 
 
@@ -52,20 +52,15 @@ rollup({
   VERSION: '1.0.0',
   ENVIRONMENT: JSON.stringify( 'development' ),
 
+  // or `string: (id) => replacement` functions...
+  __dirname: (id) => `'${path.dirname(id)}'`,
+
   // ...unless you want to be careful about separating
   // values from other options, in which case you can:
   values: {
     VERSION: '1.0.0',
     ENVIRONMENT: JSON.stringify( 'development' )
   }
-}
-```
-
-A replacement value can be supplied as a function that takes a module ID as its only argument:
-
-```js
-{
-  __dirname: ( id ) => `'${path.dirname( id )}'`
 }
 ```
 
