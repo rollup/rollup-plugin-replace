@@ -52,7 +52,7 @@ describe('rollup-plugin-replace', () => {
 		const module = { exports: {} };
 		fn(module, module.exports);
 
-		assert.equal(module.exports.foo, 'dir/foo.js');
+		assert.equal(module.exports.foo, path.join('dir', 'foo.js'));
 		assert.equal(module.exports.bar, 'main.js');
 	});
 
