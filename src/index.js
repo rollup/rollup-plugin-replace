@@ -29,7 +29,7 @@ export default function replace ( options = {} ) {
 		delete values.exclude;
 	}
 
-	const keys = Object.keys( values ).sort( longest )
+	const keys = Object.keys( values ).sort( longest ).map(escape);
 	const pattern = new RegExp( delimiters[0] + '(' + keys.join( '|' ) + ')' + delimiters[1], 'g' );
 
 	// convert all values to functions

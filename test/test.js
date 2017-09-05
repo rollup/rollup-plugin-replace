@@ -40,7 +40,7 @@ describe('rollup-plugin-replace', () => {
 		assert.equal(module.exports.bar, 'main.js');
 	});
 
-	it( 'matches most specific variables', async () => {
+	it('matches most specific variables', async () => {
 		const bundle = await rollup({
 			input: 'samples/longest-first/main.js',
 			plugins: [
@@ -54,6 +54,20 @@ describe('rollup-plugin-replace', () => {
 		const { code } = await bundle.generate({ format: 'es' });
 
 		assert.equal(code.trim(), `console.log('beta version 1.0.0');`);
+	});
+
+	it('supports special characters' , async () => {
+		const bundle = await rollup({
+			input: 'samples/special-chars/main.js',
+			plugins: [
+				replace({
+					"require('one')": "1"
+				})
+			]
+		});
+
+		const { code } = await bundle.generate({ format: 'es' });
+		assert.equal(code.trim(), 'const one = 1;\nconsole.log(one);');
 	});
 
 	// TODO tests for delimiters, sourcemaps, etc
