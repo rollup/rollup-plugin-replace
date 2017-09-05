@@ -16,7 +16,7 @@ function longest(a, b) {
 
 export default function replace(options = {}) {
 	const filter = createFilter(options.include, options.exclude);
-	const delimiters = (options.delimiters || ['', '']).map(escape);
+	const { delimiters } = options;
 
 	let values;
 
@@ -30,10 +30,16 @@ export default function replace(options = {}) {
 	}
 
 	const keys = Object.keys(values).sort(longest).map(escape);
-	const pattern = new RegExp(
-		delimiters[0] + '(' + keys.join('|') + ')' + delimiters[1],
-		'g'
-	);
+
+	const pattern = delimiters ?
+		new RegExp(
+			`${escape(delimiters[0])}(${keys.join('|')})${escape(delimiters[1])}`,
+			'g'
+		) :
+		new RegExp(
+			`\\b(${keys.join('|')})\\b`,
+			'g'
+		);
 
 	// convert all values to functions
 	Object.keys(values).forEach(key => {
@@ -65,7 +71,7 @@ export default function replace(options = {}) {
 			if (!hasReplacements) return null;
 
 			let result = { code: magicString.toString() };
-			if (options.sourceMap !== false)
+			if (options.sourceMap !== false && options.sourcemap !== false)
 				result.map = magicString.generateMap({ hires: true });
 
 			return result;

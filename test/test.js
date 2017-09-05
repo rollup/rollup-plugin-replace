@@ -5,6 +5,22 @@ const replace = require('../dist/rollup-plugin-replace.cjs.js');
 
 process.chdir( __dirname );
 
+async function evaluate(sample, opts) {
+	const bundle = await rollup({
+		input: `samples/${sample}/main.js`,
+		plugins: [
+			replace(opts)
+		]
+	});
+
+	const { code } = await bundle.generate({ format: 'cjs' });
+	const fn = new Function('module', 'exports', code);
+	const module = { exports: {} };
+	fn(module, module.exports);
+
+	return module.exports;
+}
+
 describe('rollup-plugin-replace', () => {
 	it('replaces strings', async () => {
 		const bundle = await rollup({
@@ -25,7 +41,7 @@ describe('rollup-plugin-replace', () => {
 			input: 'samples/relative/main.js',
 			plugins: [
 				replace({
-					__filename: id => `'${id.slice(path.resolve(__dirname, 'samples/relative').length + 1)}'`
+					__filename: id => JSON.stringify(id.slice(path.resolve(__dirname, 'samples/relative').length + 1))
 				})
 			]
 		});
@@ -36,7 +52,7 @@ describe('rollup-plugin-replace', () => {
 		const module = { exports: {} };
 		fn(module, module.exports);
 
-		assert.equal(module.exports.foo, 'dir/foo.js');
+		assert.equal(module.exports.foo, path.join('dir', 'foo.js'));
 		assert.equal(module.exports.bar, 'main.js');
 	});
 
@@ -61,13 +77,23 @@ describe('rollup-plugin-replace', () => {
 			input: 'samples/special-chars/main.js',
 			plugins: [
 				replace({
-					"require('one')": "1"
+					"require('one')": "1",
+					delimiters: ['', '']
 				})
 			]
 		});
 
 		const { code } = await bundle.generate({ format: 'es' });
 		assert.equal(code.trim(), 'const one = 1;\nconsole.log(one);');
+	});
+
+	it('uses word boundaries if delimiters are unspecified', async () => {
+		const exports = await evaluate('boundaries', { changed: 'replaced' });
+
+		assert.deepEqual(exports, {
+			foo: 'unchanged',
+			bar: 'replaced'
+		});
 	});
 
 	// TODO tests for delimiters, sourcemaps, etc
