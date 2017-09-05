@@ -41,7 +41,7 @@ describe('rollup-plugin-replace', () => {
 			input: 'samples/relative/main.js',
 			plugins: [
 				replace({
-					__filename: id => `'${id.slice(path.resolve(__dirname, 'samples/relative').length + 1)}'`
+					__filename: id => JSON.stringify(id.slice(path.resolve(__dirname, 'samples/relative').length + 1))
 				})
 			]
 		});
