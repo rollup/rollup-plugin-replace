@@ -23,7 +23,7 @@ export default {
   // ...
   plugins: [
     replace({
-      ENVIRONMENT: JSON.stringify( 'production' )
+      ENVIRONMENT: JSON.stringify('production')
     })
   ]
 };
@@ -45,12 +45,12 @@ export default {
 
   // To replace every occurence of `<@foo@>` instead of every
   // occurence of `foo`, supply delimiters
-  delimiters: [ '<@', '@>' ],
+  delimiters: ['<@', '@>'],
 
   // All other options are treated as `string: replacement`
   // replacers...
   VERSION: '1.0.0',
-  ENVIRONMENT: JSON.stringify( 'development' ),
+  ENVIRONMENT: JSON.stringify('development'),
 
   // or `string: (id) => replacement` functions...
   __dirname: (id) => `'${path.dirname(id)}'`,
@@ -59,10 +59,45 @@ export default {
   // values from other options, in which case you can:
   values: {
     VERSION: '1.0.0',
-    ENVIRONMENT: JSON.stringify( 'development' )
+    ENVIRONMENT: JSON.stringify('development')
   }
 }
 ```
+
+
+## Word boundaries
+
+By default, values will only match if they are surrounded by *word boundaries* — i.e. with options like this...
+
+```js
+{
+  changed: 'replaced'
+}
+```
+
+...and code like this...
+
+```js
+console.log('changed');
+console.log('unchanged');
+```
+
+...the result will be this:
+
+```js
+console.log('replaced');
+console.log('unchanged');
+```
+
+If that's not what you want, specify empty strings as delimiters:
+
+```js
+{
+  changed: 'replaced',
+  delimiters: ['', '']
+}
+```
+
 
 
 ## License

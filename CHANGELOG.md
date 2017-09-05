@@ -1,5 +1,9 @@
 # rollup-plugin-replace changelog
 
+## 2.0.0
+
+* Only match on word boundaries, unless delimiters are empty strings ([#10](https://github.com/rollup/rollup-plugin-replace/pull/10))
+
 ## 1.2.1
 
 * Match longest keys first ([#8](https://github.com/rollup/rollup-plugin-replace/pull/8))
