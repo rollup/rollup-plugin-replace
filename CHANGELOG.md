@@ -4,6 +4,10 @@
 
 * Allow replacement to be a function that takes a module ID ([#1](https://github.com/rollup/rollup-plugin-replace/issues/1))
 
+## 1.1.1
+
+* Return a `name`
+
 ## 1.1.0
 
 * Generate sourcemaps by default

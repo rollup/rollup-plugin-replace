@@ -40,6 +40,8 @@ export default function replace ( options = {} ) {
 	});
 
 	return {
+		name: 'replace',
+
 		transform ( code, id ) {
 			if ( !filter( id ) ) return null;
 
