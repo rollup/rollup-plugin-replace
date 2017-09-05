@@ -17,7 +17,6 @@ describe('rollup-plugin-replace', () => {
 		});
 
 		const { code } = await bundle.generate({ format: 'es' });
-		console.log(code);
 		assert.equal(code.trim(), 'console.log(42);');
 	});
 
@@ -39,6 +38,22 @@ describe('rollup-plugin-replace', () => {
 
 		assert.equal(module.exports.foo, 'dir/foo.js');
 		assert.equal(module.exports.bar, 'main.js');
+	});
+
+	it( 'matches most specific variables', async () => {
+		const bundle = await rollup({
+			input: 'samples/longest-first/main.js',
+			plugins: [
+				replace({
+					BUILD: 'beta',
+					BUILD_VERSION: '1.0.0'
+				})
+			]
+		})
+
+		const { code } = await bundle.generate({ format: 'es' });
+
+		assert.equal(code.trim(), `console.log('beta version 1.0.0');`);
 	});
 
 	// TODO tests for delimiters, sourcemaps, etc

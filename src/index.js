@@ -1,20 +1,17 @@
 import MagicString from 'magic-string';
 import { createFilter } from 'rollup-pluginutils';
 
-function escape ( str ) {
-	return str.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&' );
+function escape(str) {
+	return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
-function assign ( target, source ) {
-	Object.keys( source ).forEach( key => {
-		target[ key ] = source[ key ];
-	});
-	return target;
-}
-
-function functor ( thing ) {
-	if ( typeof thing === 'function' ) return thing;
+function functor(thing) {
+	if (typeof thing === 'function') return thing;
 	return () => thing;
+}
+
+function longest(a, b) {
+	return b.length - a.length;
 }
 
 export default function replace ( options = {} ) {
@@ -26,13 +23,14 @@ export default function replace ( options = {} ) {
 	if ( options.values ) {
 		values = options.values;
 	} else {
-		values = assign( {}, options );
+		values = Object.assign( {}, options );
 		delete values.delimiters;
 		delete values.include;
 		delete values.exclude;
 	}
 
-	const pattern = new RegExp( delimiters[0] + '(' + Object.keys( values ).join( '|' ) + ')' + delimiters[1], 'g' );
+	const keys = Object.keys( values ).sort( longest )
+	const pattern = new RegExp( delimiters[0] + '(' + keys.join( '|' ) + ')' + delimiters[1], 'g' );
 
 	// convert all values to functions
 	Object.keys( values ).forEach( key => {
