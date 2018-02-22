@@ -45,7 +45,7 @@ export default function replace(options = {}) {
 	const functionValues = Object.keys(values).reduce((acc, key) => {
 		acc[key] = functor(values[key]);
 		return acc;
-	}, {})
+	}, {});
 
 	return {
 		name: 'replace',
