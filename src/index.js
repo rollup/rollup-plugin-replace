@@ -42,9 +42,10 @@ export default function replace(options = {}) {
 		);
 
 	// convert all values to functions
-	Object.keys(values).forEach(key => {
-		values[key] = functor(values[key]);
-	});
+	const functionValues = Object.keys(values).reduce((acc, key) => {
+		acc[key] = functor(values[key]);
+		return acc;
+	}, {})
 
 	return {
 		name: 'replace',
@@ -63,7 +64,7 @@ export default function replace(options = {}) {
 
 				start = match.index;
 				end = start + match[0].length;
-				replacement = String(values[match[1]](id));
+				replacement = String(functionValues[match[1]](id));
 
 				magicString.overwrite(start, end, replacement);
 			}
