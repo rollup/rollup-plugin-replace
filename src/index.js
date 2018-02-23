@@ -21,7 +21,7 @@ export default function replace(options = {}) {
 	let values;
 
 	if (options.values) {
-		values = options.values;
+		values = Object.assign({}, options.values);
 	} else {
 		values = Object.assign({}, options);
 		delete values.delimiters;
