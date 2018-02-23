@@ -71,7 +71,7 @@ export default function replace(options = {}) {
 			if (!hasReplacements) return null;
 
 			let result = { code: magicString.toString() };
-			if (options.sourceMap !== false && options.sourcemap !== false)
+			if (options.sourceMap !== false || options.sourcemap !== false)
 				result.map = magicString.generateMap({ hires: true });
 
 			return result;
