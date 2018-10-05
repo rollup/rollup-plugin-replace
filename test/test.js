@@ -1,16 +1,16 @@
+/* eslint-env mocha */
+
 const assert = require('assert');
 const path = require('path');
 const { rollup } = require('rollup');
 const replace = require('../dist/rollup-plugin-replace.cjs.js');
 
-process.chdir( __dirname );
+process.chdir(__dirname);
 
 async function evaluate(sample, opts) {
 	const bundle = await rollup({
 		input: `samples/${sample}/main.js`,
-		plugins: [
-			replace(opts)
-		]
+		plugins: [replace(opts)]
 	});
 
 	const { code } = await bundle.generate({ format: 'cjs' });
@@ -54,7 +54,8 @@ describe('rollup-plugin-replace', () => {
 			input: 'samples/relative/main.js',
 			plugins: [
 				replace({
-					__filename: id => JSON.stringify(id.slice(path.resolve(__dirname, 'samples/relative').length + 1))
+					__filename: id =>
+						JSON.stringify(id.slice(path.resolve(__dirname, 'samples/relative').length + 1))
 				})
 			]
 		});
@@ -78,19 +79,19 @@ describe('rollup-plugin-replace', () => {
 					BUILD_VERSION: '1.0.0'
 				})
 			]
-		})
+		});
 
 		const { code } = await bundle.generate({ format: 'es' });
 
 		assert.equal(code.trim(), `console.log('beta version 1.0.0');`);
 	});
 
-	it('supports special characters' , async () => {
+	it('supports special characters', async () => {
 		const bundle = await rollup({
 			input: 'samples/special-chars/main.js',
 			plugins: [
 				replace({
-					"require('one')": "1",
+					"require('one')": '1',
 					delimiters: ['', '']
 				})
 			]

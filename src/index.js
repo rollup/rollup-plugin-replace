@@ -1,8 +1,8 @@
 import MagicString from 'magic-string';
-import { createFilter } from 'rollup-pluginutils';
+import {createFilter} from 'rollup-pluginutils';
 
 function escape(str) {
-	return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+	return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
 }
 
 function functor(thing) {
@@ -29,17 +29,13 @@ export default function replace(options = {}) {
 		delete values.exclude;
 	}
 
-	const keys = Object.keys(values).sort(longest).map(escape);
+	const keys = Object.keys(values)
+		.sort(longest)
+		.map(escape);
 
-	const pattern = delimiters ?
-		new RegExp(
-			`${escape(delimiters[0])}(${keys.join('|')})${escape(delimiters[1])}`,
-			'g'
-		) :
-		new RegExp(
-			`\\b(${keys.join('|')})\\b`,
-			'g'
-		);
+	const pattern = delimiters
+		? new RegExp(`${escape(delimiters[0])}(${keys.join('|')})${escape(delimiters[1])}`, 'g')
+		: new RegExp(`\\b(${keys.join('|')})\\b`, 'g');
 
 	// convert all values to functions
 	const functionValues = Object.keys(values).reduce((acc, key) => {
@@ -57,7 +53,9 @@ export default function replace(options = {}) {
 
 			let hasReplacements = false;
 			let match;
-			let start, end, replacement;
+			let start;
+			let end;
+			let replacement;
 
 			while ((match = pattern.exec(code))) {
 				hasReplacements = true;
@@ -71,7 +69,7 @@ export default function replace(options = {}) {
 
 			if (!hasReplacements) return null;
 
-			let result = { code: magicString.toString() };
+			const result = { code: magicString.toString() };
 			if (options.sourceMap !== false && options.sourcemap !== false)
 				result.map = magicString.generateMap({ hires: true });
 
