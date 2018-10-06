@@ -5,6 +5,8 @@ const assert = require('assert');
 const { rollup } = require('rollup');
 const replace = require('../dist/rollup-plugin-replace.cjs.js');
 const fs = require('fs');
+const { SourceMapConsumer } = require('source-map');
+const { getLocator } = require('locate-character');
 
 process.chdir(__dirname);
 
@@ -122,6 +124,86 @@ describe('rollup-plugin-replace', () => {
 			const { code } = getOutputFromGenerated(await bundle.generate({ format: 'es' }));
 			assert.equal(code.trim(), 'console.log(42);');
 			assert.deepEqual(valuesMap, { ANSWER: '42' });
+		});
+
+		it('generates sourcemaps', async () => {
+			const bundle = await rollup({
+				input: 'main.js',
+				onwarn(warning) {
+					throw new Error(warning.message);
+				},
+				plugins: [
+					replace({ values: { ANSWER: '42' } }),
+					{
+						resolveId(id) {
+							return id;
+						},
+						load(importee) {
+							if (importee === 'main.js') {
+								return 'import value from "other.js";\nconsole.log(value);';
+							}
+							if (importee === 'other.js') {
+								return 'export default ANSWER;';
+							}
+						}
+					}
+				]
+			});
+
+			const { code, map } = getOutputFromGenerated(
+				await bundle.generate({ format: 'es', sourcemap: true })
+			);
+
+			await SourceMapConsumer.with(map, null, async smc => {
+				const locator = getLocator(code, { offsetLine: 1 });
+
+				let generatedLoc = locator('42');
+				let loc = smc.originalPositionFor(generatedLoc); // 42
+				assert.equal(loc.source, 'other.js');
+				assert.equal(loc.line, 1);
+				assert.equal(loc.column, 15);
+
+				generatedLoc = locator('log');
+				loc = smc.originalPositionFor(generatedLoc); // log
+				assert.equal(loc.source, 'main.js');
+				assert.equal(loc.line, 2);
+				assert.equal(loc.column, 8);
+			});
+		});
+
+		it('does not generate sourcemaps if disabled', async () => {
+			let warned = false;
+
+			const bundle = await rollup({
+				input: 'main.js',
+				onwarn(warning) {
+					assert.equal(
+						warning.message,
+						"Sourcemap is likely to be incorrect: a plugin ('replace') was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help"
+					);
+					warned = true;
+				},
+				plugins: [
+					replace({ values: { ANSWER: '42' }, sourcemap: false }),
+					{
+						resolveId(id) {
+							return id;
+						},
+						load(importee) {
+							if (importee === 'main.js') {
+								return 'import value from "other.js";\nconsole.log(value);';
+							}
+							if (importee === 'other.js') {
+								return 'export default ANSWER;';
+							}
+						}
+					}
+				]
+			});
+
+			assert.ok(!warned);
+			await bundle.generate({ format: 'es', sourcemap: true });
+			assert.ok(warned);
 		});
 	});
 });
