@@ -55,12 +55,12 @@ describe('rollup-plugin-replace', () => {
 				const input = fs.readFileSync(`form/${dir}/input.js`, 'utf-8');
 				const expected = fs.readFileSync(`form/${dir}/output.js`, 'utf-8').trim();
 
-				return Promise.resolve(transform.call(transformContext, input, 'input.js')).then(
-					transformed => {
-						const actual = (transformed ? transformed.code : input).trim();
-						assert.equal(actual, expected);
-					}
-				);
+				return Promise.resolve(
+					transform.call(transformContext, input, `${__dirname}/form/${dir}/input.js`)
+				).then(transformed => {
+					const actual = (transformed ? transformed.code : input).trim();
+					assert.equal(actual, expected);
+				});
 			});
 		});
 	});

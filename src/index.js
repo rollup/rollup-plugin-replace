@@ -5,43 +5,47 @@ function escape(str) {
 	return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
 }
 
-function functor(thing) {
-	if (typeof thing === 'function') return thing;
-	return () => thing;
+function ensureFunction(functionOrValue) {
+	if (typeof functionOrValue === 'function') return functionOrValue;
+	return () => functionOrValue;
 }
 
 function longest(a, b) {
 	return b.length - a.length;
 }
 
-export default function replace(options = {}) {
-	const filter = createFilter(options.include, options.exclude);
-	const { delimiters } = options;
-
-	let values;
-
+function getReplacements (options) {
 	if (options.values) {
-		values = Object.assign({}, options.values);
+		return Object.assign({}, options.values);
 	} else {
-		values = Object.assign({}, options);
+		const values = Object.assign({}, options);
 		delete values.delimiters;
 		delete values.include;
 		delete values.exclude;
+		delete values.sourcemap;
+		delete values.sourceMap;
+		return values;
 	}
+}
 
-	const keys = Object.keys(values)
+function mapToFunctions(object) {
+	return Object.keys(object).reduce((functions, key) => {
+		functions[key] = ensureFunction(object[key]);
+		return functions;
+	}, {});
+}
+
+export default function replace(options = {}) {
+	const filter = createFilter(options.include, options.exclude);
+	const { delimiters } = options;
+	const functionValues = mapToFunctions(getReplacements(options));
+	const keys = Object.keys(functionValues)
 		.sort(longest)
 		.map(escape);
 
 	const pattern = delimiters
 		? new RegExp(`${escape(delimiters[0])}(${keys.join('|')})${escape(delimiters[1])}`, 'g')
 		: new RegExp(`\\b(${keys.join('|')})\\b`, 'g');
-
-	// convert all values to functions
-	const functionValues = Object.keys(values).reduce((acc, key) => {
-		acc[key] = functor(values[key]);
-		return acc;
-	}, {});
 
 	return {
 		name: 'replace',

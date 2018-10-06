@@ -1,1 +1,1 @@
-export default "dist/input.js";
+export default "input.js";
