@@ -46,7 +46,7 @@ describe('rollup-plugin-replace', () => {
 		});
 
 		await bundle.generate({ format: 'es' });
-		assert.equal(valuesMap.ANSWER, '42');
+		assert.deepEqual(valuesMap, {ANSWER: '42'});
 	});
 
 	it('allows replacement to be a function', async () => {
