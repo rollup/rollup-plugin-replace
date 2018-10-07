@@ -2,6 +2,7 @@
 
 ## 2.1.0
 *2018-10-07*
+* Do not mutate values passed as option ([#22](https://github.com/rollup/rollup-plugin-replace/pull/22))
 * Update dependencies and improve tests ([#26](https://github.com/rollup/rollup-plugin-replace/pull/26))
 
 ## 2.0.0
