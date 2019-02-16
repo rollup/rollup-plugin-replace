@@ -1,4 +1,5 @@
 # rollup-plugin-replace
+[![](https://img.shields.io/npm/v/rollup-plugin-replace.svg?style=flat)](https://www.npmjs.com/package/rollup-plugin-replace)
 
 Replace strings in files while bundling them.
 
