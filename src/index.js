@@ -14,7 +14,7 @@ function longest(a, b) {
 	return b.length - a.length;
 }
 
-function getReplacements (options) {
+function getReplacements(options) {
 	if (options.values) {
 		return Object.assign({}, options.values);
 	} else {

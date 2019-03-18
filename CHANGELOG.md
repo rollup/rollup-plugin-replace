@@ -1,5 +1,9 @@
 # rollup-plugin-replace changelog
 
+## 2.2.0
+*2019-03-18*
+* Update rollup-pluginutils ([#29](https://github.com/rollup/rollup-plugin-replace/pull/29))
+
 ## 2.1.0
 *2018-10-07*
 * Do not mutate values passed as option ([#22](https://github.com/rollup/rollup-plugin-replace/pull/22))
