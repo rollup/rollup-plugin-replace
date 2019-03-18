@@ -1,8 +1,9 @@
 # rollup-plugin-replace changelog
 
-## 2.2.0
+## 2.1.1
 *2019-03-18*
 * Update rollup-pluginutils ([#29](https://github.com/rollup/rollup-plugin-replace/pull/29))
+* Update dependencies ([#30](https://github.com/rollup/rollup-plugin-replace/pull/30))
 
 ## 2.1.0
 *2018-10-07*
