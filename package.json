@@ -19,7 +19,7 @@
   "dependencies": {
     "magic-string": "^0.25.1",
     "minimatch": "^3.0.2",
-    "rollup-pluginutils": "^2.0.1"
+    "rollup-pluginutils": "^2.4.1"
   },
   "scripts": {
     "test": "npm run test:only",
