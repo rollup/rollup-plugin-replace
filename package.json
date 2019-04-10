@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-replace",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-plugin-import": "^2.16.0",
