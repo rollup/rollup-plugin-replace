@@ -44,8 +44,8 @@ export default {
   // too permissive
   exclude: 'node_modules/**',
 
-  // To replace every occurence of `<@foo@>` instead of every
-  // occurence of `foo`, supply delimiters
+  // To replace every occurrence of `<@foo@>` instead of every
+  // occurrence of `foo`, supply delimiters
   delimiters: ['<@', '@>'],
 
   // All other options are treated as `string: replacement`
