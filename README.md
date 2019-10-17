@@ -1,8 +1,12 @@
 # rollup-plugin-replace
+
 [![](https://img.shields.io/npm/v/rollup-plugin-replace.svg?style=flat)](https://www.npmjs.com/package/rollup-plugin-replace)
 
 Replace strings in files while bundling them.
 
+## Archived (Migration to Mono-Repo In-Process)
+
+This repository has been archived and is in the process of being migrated to [github.com/rollup/org](https://github.com/rollup/org). New issues should be created there [github.com/rollup/org](https://github.com/rollup/org/issues).
 
 ## Installation
 
@@ -10,26 +14,23 @@ Replace strings in files while bundling them.
 npm install --save-dev rollup-plugin-replace
 ```
 
-
 ## Usage
 
-Generally, you need to ensure that rollup-plugin-replace goes *before* other things (like rollup-plugin-commonjs) in your `plugins` array, so that those plugins can apply any optimisations such as dead code removal.
-
+Generally, you need to ensure that rollup-plugin-replace goes _before_ other things (like rollup-plugin-commonjs) in your `plugins` array, so that those plugins can apply any optimisations such as dead code removal.
 
 ```js
 // rollup.config.js
 import replace from 'rollup-plugin-replace';
 
 export default {
-  // ...
-  plugins: [
-    replace({
-      ENVIRONMENT: JSON.stringify('production')
-    })
-  ]
+	// ...
+	plugins: [
+		replace({
+			ENVIRONMENT: JSON.stringify('production')
+		})
+	]
 };
 ```
-
 
 ## Options
 
@@ -65,14 +66,13 @@ export default {
 }
 ```
 
-
 ## Word boundaries
 
-By default, values will only match if they are surrounded by *word boundaries* — i.e. with options like this...
+By default, values will only match if they are surrounded by _word boundaries_ — i.e. with options like this...
 
 ```js
 {
-  changed: 'replaced'
+	changed: 'replaced';
 }
 ```
 
@@ -98,8 +98,6 @@ If that's not what you want, specify empty strings as delimiters:
   delimiters: ['', '']
 }
 ```
-
-
 
 ## License
 
