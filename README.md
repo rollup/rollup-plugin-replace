@@ -6,7 +6,7 @@ Replace strings in files while bundling them.
 
 ## Archived (Migration to Mono-Repo In-Process)
 
-This repository has been archived and is in the process of being migrated to [github.com/rollup/org](https://github.com/rollup/org). New issues should be created there [github.com/rollup/org](https://github.com/rollup/org/issues).
+This repository has been archived and is in the process of being migrated to [github.com/rollup/org](https://github.com/rollup/org). New issues should be created there [github.com/rollup/org/issues](https://github.com/rollup/org/issues).
 
 ## Installation
 
