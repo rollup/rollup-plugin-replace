@@ -1,12 +1,12 @@
+# Moved
+
+This module has moved and is now available at [@rollup/plugin-replace](https://github.com/rollup/plugins). Please update your dependencies. This repository is no longer maintained.
+
 # rollup-plugin-replace
 
 [![](https://img.shields.io/npm/v/rollup-plugin-replace.svg?style=flat)](https://www.npmjs.com/package/rollup-plugin-replace)
 
 Replace strings in files while bundling them.
-
-## Archived (Migration to Mono-Repo In-Process)
-
-This repository has been archived and is in the process of being migrated to a new monorepo. Please bear with us as we make this transition. More information to follow.
 
 ## Installation
 
